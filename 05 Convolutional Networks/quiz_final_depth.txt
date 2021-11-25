@@ -1,0 +1,41 @@
+For the following quiz questions, consider an input image that is 130x130 (x, y) and 3 in depth (RGB).
+Say, this image goes through the following layers in order:
+
+nn.Conv2d(3, 10, 3)
+nn.MaxPool2d(4, 4)
+nn.Conv2d(10, 20, 5, padding=2)
+nn.MaxPool2d(2, 2)
+
+After going through all four of these layers in sequence, what is the depth of the final output?
+1, 3, 10, 20, or 40?
+
+
+K*F*F*D_in + K
+(W_in−F+2P)/S+1
+
+130x130
+nn.Conv2d(3, 10, 3)
+  K=10
+  F=3
+  D_in=3
+    => 280
+  W_in=130
+  F=3
+  S=1
+  P=0
+    => 128x128x10
+
+nn.MaxPool2d(4, 4)
+  => 32x32x10
+
+nn.Conv2d(10, 20, 5, padding=2)
+  W_in=32
+  F=5
+  S=1
+  P=2
+    => 32x32x20
+
+nn.MaxPool2d(2, 2)
+  => 16x16x20
+
+= 5120 nodes (?)
